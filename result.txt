@@ -1,0 +1,28 @@
+Test Results
+============
+1. Generating Audio Files...
+Generating audio for: 'What is around me? Describe the surroundings.' -> test_cat_0.mp3
+Generating audio for: 'Take me to the kitchen please.' -> test_cat_1.mp3
+Generating audio for: 'Navigate to the nearest Starbucks.' -> test_cat_2.mp3
+
+2. Running Tests...
+
+--- Testing test_cat_0.mp3 ---
+Expected Category: 0
+Time: 11.15s
+Result: {'category_id': 0, 'category_name': 'Surrounding description', 'reasoning': "The phrases 'What is around me?' and 'Describe the surroundings' explicitly request information about the immediate environment, which falls under surrounding description."}
+PASS
+
+--- Testing test_cat_1.mp3 ---
+Expected Category: 1
+Time: 10.86s
+Result: {'category_id': 1, 'category_name': 'Indoor Navigation', 'reasoning': "The command 'Take me to the kitchen, please' requests navigation to a specific room within an indoor environment."}
+PASS
+
+--- Testing test_cat_2.mp3 ---
+Expected Category: 2
+Time: 11.38s
+Result: {'category_id': 2, 'category_name': 'Outdoor navigation + destination', 'reasoning': "The command 'Navigate to the nearest Starbucks' requests directions to a specific external destination, Starbucks, which falls under outdoor navigation."}
+PASS
+
+Done.
