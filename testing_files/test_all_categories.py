@@ -39,9 +39,9 @@ def test_classification(filename, expected_cat):
             
             # Simple verification
             if result.get('category_id') == expected_cat:
-                log("PASS")
+                log("✅ PASS")
             else:
-                log(f"FAIL (Expected {expected_cat}, got {result.get('category_id')})")
+                log(f"❌ FAIL (Expected {expected_cat}, got {result.get('category_id')})")
         else:
             log(f"Failed with status code: {response.status_code}")
             log(response.text)

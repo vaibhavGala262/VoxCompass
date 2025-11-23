@@ -1,6 +1,6 @@
 # Audio Classification API
 
-This project provides a FastAPI endpoint to classify audio files into three categories using Google Gemini 1.5 Flash.
+This project provides a FastAPI endpoint to classify audio files into three categories using Google Gemini 2.5 Flash.
 
 ## Categories
 *   `0`: Surrounding description
@@ -33,19 +33,6 @@ Start the FastAPI server:
 uvicorn main:app --reload
 ```
 The API will be available at `http://localhost:8000`.
-Swagger UI documentation: `http://localhost:8000/docs`.
-
-## Testing
-
-You can use the provided `test_client.py` script to test the endpoint (requires an audio file).
-
-1.  Update `test_client.py` with the path to your audio file.
-2.  Run the script:
-    ```bash
-    python test_client.py
-    ```
-
-## API Endpoint
 
 **POST** `/classify-audio`
 - **Body**: `file` (UploadFile)
