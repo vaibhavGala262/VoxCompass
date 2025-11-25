@@ -75,3 +75,48 @@ def classify_audio(audio_file_path: str):
     except Exception as e:
         print(f"Error in classify_audio: {e}")
         raise e
+
+def classify_text(text: str):
+    """
+    Classifies text input into one of the three categories.
+    """
+    try:
+        # 1. Initialize Model
+        model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+        
+        # 2. Generate Content
+        prompt = f"""
+        Analyze this text carefully. It contains a spoken command or description.
+        Classify the intent into exactly one of these three categories:
+
+        0: Surrounding description (e.g., "There is a table in front of me", "What is around me?")
+        1: Indoor Navigation (e.g., "Take me to the kitchen", "Where is the bathroom?", "Go to room 101")
+        2: Outdoor navigation + destination (e.g., "Navigate to Starbucks", "Take me to Central Park", "Directions to the nearest hospital")
+
+        Text to classify: "{text}"
+
+        Return ONLY a JSON object with the following format, no other text:
+        {{
+            "category_id": <int>,
+            "category_name": "<string>",
+            "reasoning": "<short explanation>"
+        }}
+        """
+
+        response = model.generate_content(prompt)
+        
+        # 3. Parse Response
+        response_text = response.text.strip()
+        # Remove markdown code blocks if present
+        if response_text.startswith("```json"):
+            response_text = response_text[7:]
+        if response_text.endswith("```"):
+            response_text = response_text[:-3]
+            
+        result = json.loads(response_text)
+        
+        return result
+
+    except Exception as e:
+        print(f"Error in classify_text: {e}")
+        raise e

@@ -44,3 +44,19 @@ The API will be available at `http://localhost:8000`.
       "reasoning": "The user is asking about objects nearby."
   }
   ```
+
+**POST** `/classify-text`
+- **Body**: JSON
+  ```json
+  {
+      "text": "Take me to the kitchen"
+  }
+  ```
+- **Response**: JSON
+  ```json
+  {
+      "category_id": 1,
+      "category_name": "Indoor Navigation",
+      "reasoning": "The user wants to go to a specific room indoors."
+  }
+  ```

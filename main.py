@@ -2,8 +2,9 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
-from gemini_service import classify_audio
+from gemini_service import classify_audio, classify_text
 import uuid
+from pydantic import BaseModel
 
 app = FastAPI(title="Audio Classification API")
 
@@ -18,6 +19,23 @@ app.add_middleware(
 
 UPLOAD_DIR = "temp_uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+class TextSubmission(BaseModel):
+    text: str
+
+@app.post("/classify-text")
+async def classify_text_endpoint(submission: TextSubmission):
+    """
+    Classify text into:
+    0: Surrounding description
+    1: Indoor Navigation
+    2: Outdoor navigation + destination
+    """
+    try:
+        result = classify_text(submission.text)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/classify-audio")
 async def classify_audio_endpoint(file: UploadFile = File(...)):
@@ -55,7 +73,7 @@ async def classify_audio_endpoint(file: UploadFile = File(...)):
 
 @app.get("/")
 def read_root():
-    return {"message": "Audio Classification API is running. Use POST /classify-audio to classify audio."}
+    return {"message": "Audio and Text Classification API is running. Use POST /classify-audio or /classify-text."}
 
 if __name__ == "__main__":
     import uvicorn
